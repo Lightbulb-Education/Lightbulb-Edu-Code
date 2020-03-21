@@ -1,0 +1,55 @@
+.bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.profile{
+  border-radius: 50%;
+  max-width: 20rem;
+  width: 30vw;
+}
+
+.profile-info{
+  font-size: 1.5rem;
+}
+
+.min-wid{
+  max-width: 30rem;
+}
+
+.hidden{
+  display: none;
+}
+
+.card-content{
+  min-height: 10rem;
+}
+
+#profile-list{
+  max-width: 40rem;
+  width: 60vw;
+
+}
+
+#article{
+  width: 100%;
+  margin: auto;
+  max-width: 50rem;
+}
+
+.big-html *{
+  width: 100%;
+}
+
+#all-content{
+  height: calc(100vh - 13rem);
+  overflow: auto;
+  overflow-wrap: break-word;
+
+}
+
+#scroller {
+  white-space: nowrap;
+  overflow-x: auto;
+}

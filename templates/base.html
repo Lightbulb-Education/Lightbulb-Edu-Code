@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	{% block title %}{% endblock %}
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!--link rel="stylesheet" href="static/styles/bootstrap.min (1).css"-->
+  <link rel="stylesheet" href="static/styles/sb.css">
+  <link rel="stylesheet" href="static/styles/custom.css">
+  <link rel="stylesheet" href="static/styles/icons.css">
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script src="https://unpkg.com/languages-js@latest/languages.min.js"></script>
+
+  <!-- adds the awesome JQUERY stuff! -->
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js">
+  </script>
+  <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+  
+  <!-- jsviews.js  Adds rendering methods to dynamically load from db -->
+  <script src="static/scripts/jsviews.js"></script>
+  
+  <!-- bootstrap files -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script defer src="static/scripts/sb.js"></script>
+  <script defer src="static/scripts/logout.js"></script>
+
+  <script type="text/javascript" src="static/scripts/dynamicscrollspy.min.js"></script>
+
+  <link rel="stylesheet" href="static/styles/all.css">
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js">
+	</script>
+
+	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase.js">
+	</script>
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-analytics.js">
+	</script>
+
+	<script>
+		// Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAiV0m1IFHELAv4EpF1lP2lwQ7CPAmTGfI",
+      authDomain: "lightbulb-edu-code.firebaseapp.com",
+      databaseURL: "https://lightbulb-edu-code.firebaseio.com",
+      projectId: "lightbulb-edu-code",
+      storageBucket: "lightbulb-edu-code.appspot.com",
+      messagingSenderId: "40544611157",
+      appId: "1:40544611157:web:ee58ec6f6f698361ecdddc",
+      measurementId: "G-S59TC2XP3G"
+    };
+ 
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+    firebase.analytics();
+	</script>
+
+	<script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.js">
+	</script>
+
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
+  {% block head %}{% endblock %}
+</head>
+
+{% block basebody %}
+<body id="page-top" class="">
+  {% block nav %}
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-inverse bg-primary">
+    <!--a class="navbar-brand" href="#">Navbar</a-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <nav class="navbar-item">
+        <a class="navbar-brand" href="/">
+          <img class="" src="static/images/lightbulb.png" width="48" height="48" alt="lightbulb logo">
+        </a>
+      </nav>
+      <!--ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+      </ul-->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">        
+          <a class="nav-link" href="/login">
+            <button class="btn btn-outline-success my-2 my-sm-0">Log In</button>
+          </a>
+        </li> 
+      </ul>
+    </div>
+  </nav>
+  {% endblock %}
+
+  {% block body %}{% endblock %}
+
+  <main role="main" class="container">
+    {% block content %}{% endblock %}
+  </main>
+  {% block footer %}
+  <!-- Footer -->
+      <footer class="sticky-footer bg-gray bottom">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © Lightbulb Education 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+      {% endblock %}
+</body>
+
+
+{% endblock %}
+
+</html>

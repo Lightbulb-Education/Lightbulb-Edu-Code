@@ -1,0 +1,30 @@
+{% extends 'dashboard-base.html' %} 
+
+{% block title %}
+<title>Courses - Lightbulb Education Code</title>
+{% endblock %} 
+
+{% block head_add %}
+<script defer src="static/scripts/courses.js"></script>
+{% endblock %} 
+
+
+{% block dashcontent %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+	<!-- Page Heading -->
+	<h1 class="h3 mb-4 text-gray-800">All Courses</h1>
+
+  <div class="text-center">
+    <div id="spinner" style="width: 3rem; height: 3rem;" class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+	<div class="row animated--grow-in hidden" id="courses">
+    
+	</div>
+</div>
+
+{% endblock %}

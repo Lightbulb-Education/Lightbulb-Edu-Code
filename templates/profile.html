@@ -1,0 +1,29 @@
+{% extends 'dashboard-base.html' %} 
+
+{% block title %}
+  <title>Profile - Lightbulb Education Code</title>
+{% endblock %} 
+
+
+
+{% block dashcontent %}
+  <h1 class="text-center mt-4 mb-4">Profile</h1>
+  <div class="hidden user-info animated--grow-in">
+    <div class="min-wid mx-auto d-block">
+      <img id="profile" class="profile mx-auto d-block mb-4 profile-img" src="" alt="profile">
+
+      <ul id="profile-list" class="list-group mx-auto d-block">
+        <li class="list-group-item d-flex align-items-center">
+          <i class="material-icons">account_circle</i>
+          <span class="profile-info ml-2 name" id="name"></span>
+        </li>
+        <li class="list-group-item d-flex align-items-center">
+          <i class="material-icons">email</i>
+          <span class="profile-info ml-2 email" id="email"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  
+{% endblock %}
