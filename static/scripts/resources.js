@@ -1,6 +1,6 @@
 //template html for course preview card
 var cardTemplate = 
-    `<div class="col-sm-6 mb-4">
+    `<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
       <div class="card shadow-sm" data-link="
         class{merge:beginner toggle='border-left-success'}
         class{merge:intermediate toggle='border-left-warning'}
@@ -28,46 +28,42 @@ var cardTemplate =
                   <span class="badge badge-pill badge-danger">Advanced</span>
                 {{/if}}
           </div>
-          <a href="#" class="btn btn-primary">Open Course</a>
+          <a data-link="href{:url}" target="_blank" class="btn btn-primary">Open</a>
         </div>
 			</div>
 		</div>`;
 
 var tmpl = $.templates(cardTemplate);
 
-//retrieves resources from database
-function getResources(){
-  db.collection("resources").get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} resources ${doc.data()}`);
-    });
-  });
-}
-
-
 var resources = []
 db.collection("resources").onSnapshot(function(querySnapshot) {
+  //prep formatting
   $("#resources").addClass("hidden")
   $("#spinner").fadeIn("hidden")
+
   //clears loaded courses for user whenever database is updated
   resources = []
 
+  //loads all resources from database into array
   querySnapshot.forEach(function(doc) {
     var tags = doc.data().tags
-      resources.push({name : doc.data().name, desc : doc.data().description, tags : tags, beginner : tags.includes("beginner"), intermediate : tags.includes("intermediate"), advanced : tags.includes("advanced")});
-      
-      //$.tmpl(cardTemplate, { "name" : doc.data().name, "desc" : doc.data().description }).appendTo("#resources");
-      
+      resources.push({
+        name : doc.data().name, 
+        desc : doc.data().description, 
+        url : doc.data().url, 
+        tags : tags, beginner : tags.includes("beginner"), 
+        intermediate : tags.includes("intermediate"), 
+        advanced : tags.includes("advanced")
+      });
   });
-  console.log("Current cities in CA: ", resources.join(", "));
-  $("#spinner").fadeOut("hidden")
 
+  $("#spinner").fadeOut()
 
   tmpl.link("#resources", resources);
-  
+
+  //wait for spinner fadeout
   setTimeout(function(){
     $("#resources").removeClass("hidden")
   }, 400)
-  
   
 });

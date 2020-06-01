@@ -1,0 +1,14 @@
+{
+  "name": "Lightbulb Education Code",
+  "short_name": "Lightbulb Edu Code",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [{
+  "src": "images/lightbulb-192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }],
+  "theme_color": "#234bbf",
+  "background_color": "#f8f9fc"
+}

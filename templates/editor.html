@@ -1,0 +1,54 @@
+{% extends 'dashboard-base.html' %} 
+
+{% block title %}
+  <title>Editor - Lightbulb Education Code</title>
+{% endblock %} 
+
+{% block navtitle %}Editor{% endblock %}
+
+{% block head_add %}
+  <script src="static/scripts/editor.js"></script>
+{% endblock %} 
+
+{% block dashcontent %}
+<div class="container-fluid">
+  <form id = "project-form">
+    <fieldset>
+      <!--legend class="text-primary">Create a new project!</legend-->
+      <div class="form-group">
+        <label for="fname">Name/Title</label>
+        <input type="text" class="form-control" id="fname" aria-describedby="nameHelp" placeholder="Enter name">
+        <small id="nameHelp" class="form-text text-muted">Enter a creative name for this project.</small>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="description" class="form-control" id="description" aria-describedby="descriptionHelp" placeholder="Enter description">
+        <small id="descriptionHelp" class="form-text text-muted">Give a brief overview of what this project entails.</small>
+      </div>
+      <label for="skill-levels">Please check applicable skill levels</label>
+      <div class="mb-3" id="skill-levels" >
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="beginner" value="beginner">
+          <label class="form-check-label" for="beginner">Beginner</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="intermediate" value="intermediate">
+          <label class="form-check-label" for="intermediate">Intermediate</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="advanced" value="advanced">
+          <label class="form-check-label" for="advanced">Advanced</label>
+        </div>
+      </div>
+      <label for="overview-container">Project Overview</label>
+      <div class="mb-3" id="overview-container"></div>
+      <label for="editor-container">Tutorial</label>
+      <div class="mb-3" id="editor-container"></div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button id="commit" type="button" class="btn btn-secondary">Commit Changes</button>
+    </fieldset>
+  </form>
+  
+</div>
+
+{% endblock %} 

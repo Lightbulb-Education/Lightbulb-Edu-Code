@@ -1,0 +1,89 @@
+{% extends 'base.html' %} 
+
+{% block title %}
+  <title>Login - Lightbulb Education Code</title>
+{% endblock %} 
+
+{% block head %}
+
+
+
+<script type="text/javascript">
+
+var email = "";
+var photoURL = "";
+initApp = function() {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        const usersRef = db.collection('users').doc(user.email)
+
+        //check if user has signed in before
+        usersRef.get().then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            usersRef.onSnapshot((doc) => {
+              //user has signed before
+              window.location.replace("/dashboard");
+            });
+          } else {
+            //user has not signed in
+            email = user.email;
+            photoURL = user.photoURL;
+            $("#fname").val(user.displayName)
+          }
+        });
+
+      }else{
+        //no use logged in
+        window.location.replace("/login?callback=%2Fnewuser")
+      }
+    }, function(error) {
+      console.log(error);
+    });
+  };
+  
+$(initApp);
+    
+</script>
+
+<script src="static/scripts/newuser.js"></script>
+{% endblock %} 
+
+
+{% block body %}
+
+<div class="container-fluid" id="newuser">
+  <h1 class="text-center mt-5 mb-4">Tell us a bit about yourself</h1>
+    <form id = "newuser-form">
+    <fieldset>
+      <div class="form-group">
+        <label for="fname" class="sr-only">Name:</label>
+        <input type="text" class="form-control" id="fname" placeholder="Name">
+      </div>
+      <div class="form-group">
+        <label for="username" class="sr-only">Username:</label>
+        <input autocomplete="off" type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Username" toggle="popover" title="Username is already taken" data-content="Please change your username to something else" data-placement="bottom">
+        <small id="usernameHelp" class="form-text text-muted">This might be displayed to other users.</small>
+      </div>
+      <div class="input-group pb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="Role">Role</label>
+        </div>
+        <select class="custom-select" id="Role">
+          <option value="student">Student</option>
+          <option value="educator">Educator</option>
+          <option value="parent">Parent</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitForm" disabled>Submit</button>
+    </fieldset>
+  </form>
+</div>
+
+
+<script>
+
+
+</script>
+{% endblock %} 

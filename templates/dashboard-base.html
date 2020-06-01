@@ -2,32 +2,51 @@
 
 {% block head %}
 <script type="text/javascript">
+  var signOutState = false;
 	initApp = function() {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var uid = user.uid;
-        var phoneNumber = user.phoneNumber;
-        var providerData = user.providerData;
-        $(".name").html(displayName);
-        $(".profile-img").attr("src", photoURL);
-        $(".email").html(email);
-        $("#user-info, .user-info").removeClass("hidden");
+
+        const usersRef = db.collection('users').doc(user.email)
+        //check if user has signed in before
+        usersRef.get().then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            usersRef.onSnapshot((doc) => {
+              //user has signed before
+              var data = doc.data()
+              $('body').removeClass("hidden")
+              // var displayName = user.displayName;
+              // var email = user.email;
+              // var emailVerified = user.emailVerified;
+              // var photoURL = user.photoURL;
+              // var uid = user.uid;
+              // var phoneNumber = user.phoneNumber;
+              // var providerData = user.providerData;
+              $(".name").text(data.name);
+              $(".username").text(data.username);
+              $(".profile-img").attr("src", data.photourl);
+              $(".email").text(doc.id);
+              $("#user-info, .user-info").removeClass("hidden");
+            });
+          } else {
+            //user has not signed in
+            window.location.replace("/newuser")
+          }
+        });
       } else {
-        // User is signed out.
+        if(!signOutState){
+          // User is signed out.
+          var path = window.location.pathname+window.location.search
+          window.location.replace("/login?callback=" + encodeURIComponent(path))
+        }
       }
     }, function(error) {
       console.log(error);
     });
   };
 
-  $(function() {
-    initApp();
-  })
+  $(initApp)
     
 </script>
 
@@ -38,13 +57,13 @@
 
 {% block basebody %}
 
-<body id="page-top" class="">
+<body id="page-top" class="hidden">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
@@ -58,14 +77,14 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
+      <li id="nav-dashboard" class="nav-item">
         <a class="nav-link" href="/dashboard">
           <i class="fa fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
       
       <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+      <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
@@ -73,22 +92,29 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+      <li id="nav-projects" class="nav-item">
+        <a class="nav-link collapsed" href="/projects">
           <i class="fa fa-fw fa-project-diagram"></i>
           <span>Projects</span>
         </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <!--div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item active" href="/projects">All</a>
-            <a class="collapse-item" href="cards.html">Current</a>
-            <a class="collapse-item" href="cards.html">Completed</a>
+            <a id="nav-projects-all" class="collapse-item" href="/projects">All</a>
+            <a id="nav-projects-current" class="collapse-item" href="cards.html">Current</a>
+            <a id="nav-projects-completed" class="collapse-item" href="cards.html">Completed</a>
           </div>
-        </div>
+
+        </div-->
       </li>
 
+      <!-- Nav Item - Courses -->
+      <li id="nav-courses" class="nav-item">
+        <a class="nav-link" href="/courses">
+          <i class="fa fa-fw fa-book-open"></i>
+          <span>Courses</span></a>
+      </li>
       
-
       <!-- Divider -->
       <hr class="sidebar-divider">
       
@@ -113,14 +139,14 @@
       </li-->
 
       <!-- Nav Item - Resources -->
-      <li class="nav-item">
+      <li id="nav-resources" class="nav-item">
         <a class="nav-link" href="/resources">
           <i class="fa fa-fw fa-book"></i>
           <span>Resources</span></a>
       </li>
 
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
+      <!-- Nav Item - byteCode -->
+      <li id="nav-byteCode" class="nav-item">
         <a class="nav-link" href="https://www.youtube.com/channel/UCHeRnkORi2B3G4kbSyhBtqA" target="_blank">
           <i class="fa fa-fw fa-play-circle"></i>
           <span>byteCode&nbsp;	
@@ -148,8 +174,6 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-
-
 
       <!-- Nav Item - Charts 
       <li class="nav-item">
@@ -194,49 +218,20 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fa fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+          <!-- Nav Title -->
+          <h3 class="mr-auto ml-md-3 my-2 my-md-0">{% block navtitle %}{% endblock %}</h3>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fa fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-
-            <!-- Nav Item - Alerts -->
+            <!-- Nav Item - Alerts >
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
+                <!-- Counter - Alerts ->
                 <span class="badge badge-danger badge-counter">3+</span>
               </a>
-              <!-- Dropdown - Alerts -->
+              <!-- Dropdown - Alerts ->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
@@ -276,16 +271,16 @@
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
-            </li>
+            </li-->
 
-            <!-- Nav Item - Messages -->
+            <!-- Nav Item - Messages ->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
+                <!-- Counter - Messages ->
                 <span class="badge badge-danger badge-counter">7</span>
               </a>
-              <!-- Dropdown - Messages -->
+              <!-- Dropdown - Messages ->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
@@ -334,12 +329,12 @@
               </div>
             </li>
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+            <div class="topbar-divider d-none d-sm-block"></div-->
 
             <!-- Nav Item - User Information -->
             <li id="user-info" class="nav-item dropdown no-arrow hidden">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span id="name" class="mr-2 d-none d-lg-inline text-gray-600 small name"></span>
+                <span id="username" class="mr-2 d-none d-lg-inline text-gray-600 small username"></span>
                 <img id="profile" class="img-profile rounded-circle profile-img" src="" width="60" height="60">
               </a>
               <!-- Dropdown - User Information -->
@@ -348,7 +343,7 @@
                   <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-                <a class="dropdown-item" href="#">
+                <!--a class="dropdown-item" href="#">
                   <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                   Settings
                 </a>
@@ -356,7 +351,7 @@
                   <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                   Activity Log
                 </a>
-                <div class="dropdown-divider"></div>
+                <div class="dropdown-divider"></div-->
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fa fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout

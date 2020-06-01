@@ -4,27 +4,24 @@
 <title>Project - Lightbulb Education Code</title>
 {% endblock %} 
 
+{% block topbase %}<!--no base-->{% endblock %}
+
 {% block head_add %}
 <script defer src="static/scripts/project.js"></script>
-<script defer src="static/scripts/scroll.js"></script>
 
 {% endblock %} 
 
-{% block dashcontent %}
-<nav id="scroller" class="navbar navbar-light bg-light">
-  </nav>
-<div class="container-fluid">
-  <!-- breadcrumbs
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Library</li>
-    </ol>
-  </nav>
-  -->
+{% block navtitle %}Project{% endblock %}
 
-	<!-- Page Heading -->
-  
+
+{% block dashcontent %}
+
+
+
+<nav id="scroller" class="navbar hidden ml-3">
+</nav>
+<div class="container-fluid">
+  <a href="/projects" id="back" class="btn btn-primary shadow-sm btn-circle btn-large floating-button"><i class="fas fa-arrow-left fa-sm text-white-50 floating-button-icon"></i></a>
 
   <div id="all-content" data-spy="scroll" data-target="#scroller" data-offset="200">
     <div class="text-center" class="animated--grow-in">
@@ -34,18 +31,16 @@
     </div>
 
     <div id="article" class="animated--grow-in hidden p-5 mb-5 mt-5 shadow-lg">
-      <h1 id="title" class="mb-4 text-gray-800"></h1>
-      <h6 class="" id="description"></h6>
+      <h1 id="title" class="mb-2 text-gray-800"></h1>
+      <h5 class="mb-4" id="description"></h5>
 
       <div class="big-html" id="page-content" ></div>
     </div>
   </div>
-  
 </div>
 
   {% block base %}
     <!--base href="https://workshops.hackclub.com/"-->
-
   {% endblock %} 
 
 {% endblock %}

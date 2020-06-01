@@ -1,0 +1,50 @@
+{% extends 'dashboard-base.html' %} 
+
+{% block title %}
+<title>Course - Lightbulb Education Code</title>
+{% endblock %} 
+
+{% block head_add %}
+<script defer src="static/scripts/course.js"></script>
+{% endblock %} 
+
+{% block navtitle %}Course{% endblock %}
+
+
+{% block dashcontent %}
+
+
+<div class="container-fluid" >
+
+  <div class="text-center">
+    <div id="spinner" style="width: 3rem; height: 3rem;" class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div class="row mb-4" id="course">
+
+    <div id="article" class="animated--grow-in mb-5 mt-5 shadow-lg p-5">
+      <h1 id="course-name" class="mb-4 text-gray-800"></h1>
+      <div class="list-group" id="listgroup" role="tablist"></div>
+    </div>
+
+    <!--div class="col-xl-9 col-lg-8 col-md-12 col-sm-12 col-12">
+      <div class="tab-content list-group-item" id="contentgroup"></div>
+    </div-->
+
+  </div>
+
+</div>
+
+
+<script>
+
+
+</script>
+
+  {% block base %}
+    <!--base href="https://workshops.hackclub.com/"-->
+  {% endblock %} 
+
+{% endblock %}

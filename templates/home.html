@@ -1,34 +1,83 @@
-{% extends 'base.html' %} 
-
-{% block title %}
-  <title>Lightbulb Education Code</title>
-{% endblock %} 
-
-{% block head %}
-{% endblock %} 
-
-
-
-{% block body %}
+{% extends 'base.html' %} {% block title %}
+<title>Lightbulb Education Code</title>
+{% endblock %} {% block head %}
+<script type="text/javascript">
+	initApp = function() {
+          firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              // User is signed in.
+              $("#fancy-top").text("Welcome back to")
+              $("#subheading").text("Continue where you left off")
+              $("#lead").text("Open Dashboard").attr("href", "/dashboard")
+            }
+          }, function(error) {
+            console.log(error);
+          });
+        };
+    window.addEventListener('load', initApp);
+</script>
+{% endblock %} {% block body %}
 <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Welcome to Lightbulb Education Code</h1>
-    <p class="lead">Login now to access resources.</p>
-    <a class="btn btn-primary btn-lg" href="/login" role="button">Login / Sign Up</a>
+	<div class="container">
+		<h1 id="heading" class="display-4">
+			<div>
+				<small id="fancy-top" class="text-muted">Welcome to </small>
+      </div>
+      <div>
+        Lightbulb Education Code
+      </div>
+    </h1>
+    <p id="subheading" class="lead">Login now to access a world of coding.</p>
+    <a id="lead" class="btn btn-primary btn-lg" href="/login" role="button">Login / Sign Up</a>
   </div>
 </div>
 
 {% endblock %}
 
 {% block content %}
-    <h2 class="">Why should I learn how to code?</h1>
-    <p class="lead">Coding is a super power!</p>
-    <a class="btn btn-primary btn-lg" href="/donate" role="button">Donate</a>
+<div class="row mb-5 mt-5">
+  <div class="col-md-5 order-md-2 mb-3">
+    <img src="static/images/laptop-code.jpg" width="100%">
+  </div>
+  <div class="col-md-7 order-md-1">
+    <h2 class="">Learn how to code by doing</h1>
+    <p class="lead">We know that simply reading textbooks isn't the way to learn coding. It's boring and you make slow progress.</p>
+    <p class="lead">That's why we give you lots of projects, sorted by skill level. Take advantage of our curated project tutorials to supercharge your learning.</p>
+    <a class="btn btn-secondary btn-lg mb-4" href="/projects" role="button">See our Projects</a>
+  </div>
+</div>
 
+<div class="row mt-5 ">
+  <div class="col-md-5 order-md-1 mb-3">
+    <img src="static/images/Blog_coding-game.jpg" width="100%">
+  </div>
+  <div class="col-md-7 order-md-2">
+
+    <h2 class="">Built for all skill levels</h1>
+    <p class="lead">Those who are just starting to code can take advantage of our guided tutorials built for beginners, while those who know a bit about coding will likely find a fun challenge in our more difficult projects.</p>
+  </div>
+</div>
+
+<div class="row mt-5 ">
+  <div class="col-md-5 order-md-2 mb-3">
+    <img src="static/images/working-space.jpg" width="100%">
+  </div>
+  <div class="col-md-7 order-md-1">
+    <h2 class="">Track your coding journey</h1>
+    <p class="lead">Keep track of the projects you work on.</p>
+    <a class="btn btn-secondary btn-lg mb-4" href="/dashboard" role="button">Get Started</a>
+  </div>
+</div>
 {% endblock %}
 
-
-
-
-
-
+{% block footer %}
+<!-- Footer -->
+<footer class="sticky-footer bg-gray-700 mt-5">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto text-gray-300">
+      <span>Copyright © Lightbulb Education 2020</span>
+    </div>
+  </div>
+</footer>
+<!-- End of Footer -->
+{% endblock %}
